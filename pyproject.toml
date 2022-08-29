@@ -13,8 +13,8 @@ build-backend = 'setuptools.build_meta'
 [project]
 name = 'PythonTemplate'
 # Versions are [Year].[Release of Year]
-version = '2022.4'
-description = 'Python template file for faster setup and builds'
+version = '2022.1'
+description = 'Code to generate relative placement scores'
 requires-python = '>=3.7'
 license = {file = "LICENSE.txt"}
 keywords = ['Python']
@@ -39,22 +39,15 @@ dev = [
 ]
 
 [project.urls]
-homepage = 'https://github.com/kylekap/PythonTemplate'
-documentation = 'https://github.com/kylekap/PythonTemplate/tree/main/docs'
-repository = 'https://github.com/kylekap/PythonTemplate'
-changelog = 'https://github.com/kylekap/PythonTemplate/tree/main/Docs/Changelog.md'
+homepage = 'https://github.com/kylekap/RelativePlacement'
+documentation = 'https://github.com/kylekap/RelativePlacement/tree/main/docs'
+repository = 'https://github.com/kylekap/RelativePlacement'
+changelog = 'https://github.com/kylekap/RelativePlacement/tree/main/Docs/Changelog.md'
 
 
 [tool.black]
 line-length = 120
 target_version = ['py39']
-
-[tool.coverage.paths]
-source = ['src']
-tests = ['tests']
-
-[tool.coverage.run]
-source = ['src']
 
 [tool.coverage.report]
 show_missing = true
