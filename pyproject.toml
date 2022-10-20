@@ -21,7 +21,7 @@ keywords = ['Python']
 authors = [{email = 'kylekaptbone@yahoo.com'},{name = 'Kyle Patterson'}]
 classifiers = ['Programming Language :: Python']
 dynamic = ['readme']
-dependencies = ['flake8']
+dependencies = ['flake8', 'pandas']
 
 [tool.setuptools.dynamic]
 readme = {file = ['README.md']}
