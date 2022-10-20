@@ -1,5 +1,7 @@
 # Standard library
 import math
+
+# Third-party
 import pandas as pd
 
 
@@ -88,7 +90,20 @@ if __name__ == "__main__":
     try:
         bluesmuse = Competition("Tests/test.csv")
         for ea, values in bluesmuse.competitors.items():
-            print(ea, values.placements, "Majority:", values.majority, "CT", values.majority_ct, "Sum", values.majority_sum, "Next", values.majority_next, "Total", values.all_sum)
+            print(
+                ea,
+                values.placements,
+                "Majority:",
+                values.majority,
+                "CT",
+                values.majority_ct,
+                "Sum",
+                values.majority_sum,
+                "Next",
+                values.majority_next,
+                "Total",
+                values.all_sum,
+            )
 
     except Exception as E:
         print(type(E).__name__, __file__, E.__traceback__.tb_lineno, "\n", E)
