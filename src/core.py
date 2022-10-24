@@ -12,7 +12,9 @@ class Competition:
         self.majority_number = self._majority()
         self._majority_col()
         self._sum_majority()
-        self.df.sort_values(by=['majority_col', 'majority_tot'], ascending=[True, True], inplace=True)
+        self._rank()
+        self.df = self._simple_output()
+        self.df.sort_values(by=['rank'], ascending=[True], inplace=True)
 
     def _majority(self):
         for i in range(1, len(self.df.index) + 1):
@@ -28,8 +30,18 @@ class Competition:
 
     def _sum_majority(self):
         for index, row in self.df.iterrows():
-            self.df.loc[(self.df.index == index), "majority_tot"] = row[row[-1] + len(self.judges) + len(self.df.index) - 1]
-        self.df = self.df.loc[:, ~self.df.columns.str.contains('sum')]
+            self.df.loc[(self.df.index == index), "majority_ct"] = row[row["majority_col"] + len(self.judges) - 1]
+            self.df.loc[(self.df.index == index), "majority_tot"] = row[row["majority_col"] + len(self.judges) + len(self.df.index) - 1]
+
+    def _simple_output(self):
+        a = self.df.columns.str.contains('majority')
+        for ea in range(0, len(self.judges)):
+            a[ea] = True
+        a[-1] = True
+        return self.df.loc[:, a]
+
+    def _rank(self):
+        self.df["rank"] = self.df[["majority_col", "majority_ct", "majority_tot"]].apply(tuple, axis=1).rank(method='dense', ascending=True).astype(int)
 
     def import_data(self, filepath):
         with open(filepath) as fp:
