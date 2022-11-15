@@ -1,5 +1,8 @@
-import pandas as pd
+# Standard library
 import math
+
+# Third-party
+import pandas as pd
 
 
 class Competition:
@@ -14,7 +17,7 @@ class Competition:
         self._sum_majority()
         self._rank()
         self.df = self._simple_output()
-        self.df.sort_values(by=['rank'], ascending=[True], inplace=True)
+        self.df.sort_values(by=["rank"], ascending=[True], inplace=True)
 
     def _majority(self):
         for i in range(1, len(self.df.index) + 1):
@@ -26,22 +29,31 @@ class Competition:
     def _majority_col(self):
         self.df["majority_col"] = ""
         for i in range(1, len(self.df.index) + 1):
-            self.df.loc[(self.df[f"{str(i)}"] >= self.majority_number) & (self.df["majority_col"] == ""), "majority_col"] = i
+            self.df.loc[
+                (self.df[f"{str(i)}"] >= self.majority_number) & (self.df["majority_col"] == ""), "majority_col"
+            ] = i
 
     def _sum_majority(self):
         for index, row in self.df.iterrows():
             self.df.loc[(self.df.index == index), "majority_ct"] = row[row["majority_col"] + len(self.judges) - 1]
-            self.df.loc[(self.df.index == index), "majority_tot"] = row[row["majority_col"] + len(self.judges) + len(self.df.index) - 1]
+            self.df.loc[(self.df.index == index), "majority_tot"] = row[
+                row["majority_col"] + len(self.judges) + len(self.df.index) - 1
+            ]
 
     def _simple_output(self):
-        a = self.df.columns.str.contains('majority')
+        a = self.df.columns.str.contains("majority")
         for ea in range(0, len(self.judges)):
             a[ea] = True
         a[-1] = True
         return self.df.loc[:, a]
 
     def _rank(self):
-        self.df["rank"] = self.df[["majority_col", "majority_ct", "majority_tot"]].apply(tuple, axis=1).rank(method='dense', ascending=True).astype(int)
+        self.df["rank"] = (
+            self.df[["majority_col", "majority_ct", "majority_tot"]]
+            .apply(tuple, axis=1)
+            .rank(method="dense", ascending=True)
+            .astype(int)
+        )
 
     def import_data(self, filepath):
         with open(filepath) as fp:
